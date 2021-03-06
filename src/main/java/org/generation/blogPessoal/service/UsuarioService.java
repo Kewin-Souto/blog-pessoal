@@ -27,11 +27,11 @@ public class UsuarioService {
 		String senhaEncoder = encoder.encode(usuario.getSenha());
 		usuario.setSenha(senhaEncoder);
 
-		return  repository.save(usuario);
+		return repository.save(usuario);
 	}
 
 	public Optional<UserLogin> Logar(Optional<UserLogin> user) {
-		
+
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		Optional<Usuario> usuario = repository.findByUsuario(user.get().getUsuario());
 
@@ -44,6 +44,8 @@ public class UsuarioService {
 
 				user.get().setToken(authHeader);
 				user.get().setNome(usuario.get().getNome());
+				user.get().setSenha(usuario.get().getSenha());
+				user.get().setTipoUsuario(usuario.get().getTipoUsuario());
 
 				return user;
 			}
